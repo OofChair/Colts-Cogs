@@ -1,6 +1,8 @@
 {
   "author": [
-    "Colt#0001, Dinnerb0ne#2067"
+    "Colt#0001",
+    "Dinnerb0ne#2067",
+    "Predä 。#1001"
   ],
   "description": "Runs a speedtest and prints the result, uses speedtest-cli.",
   "short": "Runs a speedtest and prints the result.",
@@ -9,5 +11,6 @@
     "utility",
     "system"
   ],
+  "requirements": ["speedtest-cli"],
   "type": "COG"
 }

@@ -2,7 +2,6 @@ import discord
 from redbot.core.bot import Red
 from redbot.core import commands, checks
 from redbot.core.utils.chat_formatting import box
-from redbot.core.utils.common_filters import URL_RE
 
 from datetime import datetime
 import re
@@ -11,6 +10,9 @@ import subprocess
 DOWNLOAD_RE = re.compile(r"Download: ([\d.]+) .bit")
 UPLOAD_RE = re.compile(r"Upload: ([\d.]+) .bit")
 PING_RE = re.compile(r"([\d.]+) ms")
+IMG_RE = re.compile(
+    r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+)
 
 
 class Speedtest(commands.Cog):
@@ -28,7 +30,7 @@ class Speedtest(commands.Cog):
     @checks.is_owner()
     @commands.command()
     @commands.bot_has_permissions(embed_links=True)
-    async def speedtest(self, ctx):
+    async def speedtest(self, ctx: commands.Context):
         """Runs a speedtest and prints the result."""
         try:
             em = discord.Embed(
@@ -40,7 +42,7 @@ class Speedtest(commands.Cog):
             download = float(DOWNLOAD_RE.search(speedtest_result).group(1))
             upload = float(UPLOAD_RE.search(speedtest_result).group(1))
             ping = float(PING_RE.search(speedtest_result).group(1))
-            img = str(URL_RE.search(speedtest_result).group(1))
+            img = str(IMG_RE.search(speedtest_result).group(1))
             embed = discord.Embed(color=0x10A714, title="Your speedtest results are:")
             embed.add_field(name="Download", value=box(f"{download} mbps", lang="py"))
             embed.add_field(name="Upload", value=box(f"{upload} mbps", lang="py"))

@@ -5,6 +5,7 @@ from redbot.core.utils.chat_formatting import box
 
 from datetime import datetime
 import re
+import contextlib
 import subprocess
 
 DOWNLOAD_RE = re.compile(r"Download: ([\d.]+) .bit", re.I)
@@ -52,7 +53,8 @@ class Speedtest(commands.Cog):
             embed.set_image(url=img)
             embed.set_footer(text=datetime.now().strftime("Server time: %d-%m-%Y  %H:%M:%S"))
             if not edited:
-                await msg.delete()
+                with contextlib.suppress(discord.NotFound):
+                    await msg.delete()
                 return await ctx.send(embed=embed)
             await msg.edit(embed=embed)
         except KeyError as error:

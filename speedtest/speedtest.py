@@ -7,12 +7,10 @@ from datetime import datetime
 import re
 import subprocess
 
-DOWNLOAD_RE = re.compile(r"Download: ([\d.]+) .bit")
-UPLOAD_RE = re.compile(r"Upload: ([\d.]+) .bit")
-PING_RE = re.compile(r"([\d.]+) ms")
-IMG_RE = re.compile(
-    r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
-)
+DOWNLOAD_RE = re.compile(r"Download: ([\d.]+) .bit", re.I)
+UPLOAD_RE = re.compile(r"Upload: ([\d.]+) .bit", re.I)
+PING_RE = re.compile(r"([\d.]+) ms", re.I)
+IMG_RE = re.compile(r"(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)", re.I)
 
 
 class Speedtest(commands.Cog):
@@ -30,8 +28,12 @@ class Speedtest(commands.Cog):
     @checks.is_owner()
     @commands.command()
     @commands.bot_has_permissions(embed_links=True)
-    async def speedtest(self, ctx: commands.Context):
-        """Runs a speedtest and prints the result."""
+    async def speedtest(self, ctx: commands.Context, edited: bool = True):
+        """
+        Runs a speedtest and prints the result.
+
+        Use `[p]speedtest false` if you want the result in a new message.
+        """
         try:
             em = discord.Embed(
                 color=await ctx.embed_colour(),
@@ -42,13 +44,17 @@ class Speedtest(commands.Cog):
             download = float(DOWNLOAD_RE.search(speedtest_result).group(1))
             upload = float(UPLOAD_RE.search(speedtest_result).group(1))
             ping = float(PING_RE.search(speedtest_result).group(1))
-            img = str(IMG_RE.search(speedtest_result).group(1))
+            img = str(IMG_RE.search(speedtest_result).group(0))
             embed = discord.Embed(color=0x10A714, title="Your speedtest results are:")
+            embed.add_field(name="Ping", value=box(f"{ping} ms", lang="py"))
             embed.add_field(name="Download", value=box(f"{download} mbps", lang="py"))
             embed.add_field(name="Upload", value=box(f"{upload} mbps", lang="py"))
-            embed.add_field(name="Ping", value=box(f"{ping} ms", lang="py"))
             embed.set_image(url=img)
             embed.set_footer(text=datetime.now().strftime("Server time: %d-%m-%Y  %H:%M:%S"))
-            await msg.edit(embed=embed)
+            if edited:
+                await msg.edit(embed=embed)
+            else:
+                await msg.delete()
+                await ctx.send(embed=embed)
         except KeyError as error:
             await ctx.send(f"An error occured.\n{error}")

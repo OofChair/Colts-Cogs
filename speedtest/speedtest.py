@@ -51,10 +51,9 @@ class Speedtest(commands.Cog):
             embed.add_field(name="Upload", value=box(f"{upload} mbps", lang="py"))
             embed.set_image(url=img)
             embed.set_footer(text=datetime.now().strftime("Server time: %d-%m-%Y  %H:%M:%S"))
-            if edited:
-                await msg.edit(embed=embed)
-            else:
+            if not edited:
                 await msg.delete()
-                await ctx.send(embed=embed)
+                return await ctx.send(embed=embed)
+            await msg.edit(embed=embed)
         except KeyError as error:
             await ctx.send(f"An error occured.\n{error}")

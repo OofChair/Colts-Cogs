@@ -9,5 +9,5 @@
   "install_msg" : "Thanks for downloading speedtest cog.\n⚠️ Before using that cog you will need to install Ookla's speedtest package (and **not** speedtest-cli, if you have this package you will have to uninstall it, `sudo apt-get uninstall speedtest-cli` or `pip uninstall speedtest-cli`), here is a link with all instructions for your OS.\nhttps://www.speedtest.net/apps/cli",
   "tags": ["utility", "system"],
   "requirements": ["humanize"],
-  "type": "COG"
+  "min_bot_version": "3.2.0a0.dev1"
 }

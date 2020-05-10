@@ -13,7 +13,7 @@ from humanize import naturalsize
 class Speedtest(commands.Cog):
     """Speedtest for your bot's server."""
 
-    __version__ = "1.1.2"
+    __version__ = "1.1.3"
     __author__ = ["Colt#0001", "Dinnerb0ne#2067", "Predä 。#1001"]
 
     def __init__(self, bot: Red):
@@ -67,7 +67,7 @@ class Speedtest(commands.Cog):
                     f"Latency  : {round(result['ping']['latency'], 2)}ms ({round(result['ping']['jitter'], 2)}ms jitter)\n"
                     f"Download : {naturalsize(result['download']['bandwidth'] * 8)}ps ({naturalsize(result['download']['bytes'])} used)\n"
                     f"Upload   : {naturalsize(result['upload']['bandwidth'] * 8)}ps ({naturalsize(result['upload']['bytes'])} used)\n"
-                    f"Packet loss: {float(result.get('packetLoss', 0))}%",
+                    f"Packet loss: {round(float(result.get('packetLoss', 0)), 2)}%",
                     lang="py",
                 )
             ),

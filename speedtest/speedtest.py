@@ -13,7 +13,7 @@ from humanize import naturalsize
 class Speedtest(commands.Cog):
     """Speedtest for your bot's server."""
 
-    __version__ = "1.1.1"
+    __version__ = "1.1.2"
     __author__ = ["Colt#0001", "Dinnerb0ne#2067", "Predä 。#1001"]
 
     def __init__(self, bot: Red):
@@ -46,26 +46,28 @@ class Speedtest(commands.Cog):
             color=await ctx.embed_colour(), title="Running speedtest ... This may take a while! ⏱",
         )
         msg = await ctx.send(embed=em)
-        result = await self.bot.loop.run_in_executor(None, self._speedtest)
-        if result[1]:
+        results = await self.bot.loop.run_in_executor(None, self._speedtest)
+        if results[1]:
             em.color = discord.Color.dark_red()
             em.title = (
                 "Failed to get a speedtest result.\n"
-                "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli"
+                "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli\n"
+                "Don't forget to uninstall old speedtest-cli package by using `sudo apt-get uninstall speedtest-cli` and `pip uninstall speedtest-cli`.\n"
+                "After this done, you will have to run a first speedtest in console by using `speedtest` command, to agreed their terms."
             )
             return await msg.edit(embed=em)
-        result = json.loads(result[0])
+        result = json.loads(results[0])
         embed = discord.Embed(
             color=0x10A714,
             title="Your speedtest results are:",
             description=(
                 box(
                     f"Server   : {result['server']['name']} - {result['server']['location']}\n"
-                    f"ISP      : {result['isp']}\n"
+                    f"ISP      : {result.get('isp', 'Unknown')}\n"
                     f"Latency  : {round(result['ping']['latency'], 2)}ms ({round(result['ping']['jitter'], 2)}ms jitter)\n"
                     f"Download : {naturalsize(result['download']['bandwidth'] * 8)}ps\n"
                     f"Upload   : {naturalsize(result['upload']['bandwidth'] * 8)}ps\n"
-                    f"Packet loss: {float(result['packetLoss'])}%",
+                    f"Packet loss: {float(result.get('packetLoss', 0))}%",
                     lang="py",
                 )
             ),

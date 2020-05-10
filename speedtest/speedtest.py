@@ -53,7 +53,7 @@ class Speedtest(commands.Cog):
             em.description = (
                 "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli\n"
                 "Don't forget to uninstall old speedtest-cli package by using `sudo apt-get uninstall speedtest-cli` and `pip uninstall speedtest-cli`.\n"
-                "After this done, you will have to run a first speedtest in console by using `speedtest` command, to agreed their terms."
+                "After this done, you will have to run a first speedtest in console by using `speedtest --accept-license --accept-gdpr` command, to agreed their terms."
             )
             return await msg.edit(embed=em)
         result = json.loads(results[0])

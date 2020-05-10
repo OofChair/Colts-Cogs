@@ -4,13 +4,10 @@
     "Dinnerb0ne#2067",
     "Predä 。#1001"
   ],
-  "description": "Runs a speedtest and prints the result, uses speedtest-cli.",
+  "description": "Runs a speedtest and prints the result, uses speedtest package.",
   "short": "Runs a speedtest and prints the result.",
-  "install_msg" : "Thanks for downloading, simply use !speedtest to run a speedtest.",
-  "tags": [
-    "utility",
-    "system"
-  ],
-  "requirements": ["speedtest-cli"],
+  "install_msg" : "Thanks for downloading speedtest cog.\n⚠️ Before using that cog you will need to install Ookla's speedtest package (and **not** speedtest-cli, if you have this package you will have to uninstall it, `sudo apt-get uninstall speedtest-cli` or `pip uninstall speedtest-cli`), here is a link with all instructions for your OS.\nhttps://www.speedtest.net/apps/cli",
+  "tags": ["utility", "system"],
+  "requirements": ["humanize"],
   "type": "COG"
 }

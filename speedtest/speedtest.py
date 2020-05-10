@@ -49,9 +49,8 @@ class Speedtest(commands.Cog):
         results = await self.bot.loop.run_in_executor(None, self._speedtest)
         if results[1]:
             em.color = discord.Color.dark_red()
-            em.title = None
+            em.title = "Failed to get a speedtest result."
             em.description = (
-                "Failed to get a speedtest result.\n"
                 "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli\n"
                 "Don't forget to uninstall old speedtest-cli package by using `sudo apt-get uninstall speedtest-cli` and `pip uninstall speedtest-cli`.\n"
                 "After this done, you will have to run a first speedtest in console by using `speedtest` command, to agreed their terms."

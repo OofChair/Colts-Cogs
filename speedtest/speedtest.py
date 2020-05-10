@@ -13,7 +13,7 @@ from humanize import naturalsize
 class Speedtest(commands.Cog):
     """Speedtest for your bot's server."""
 
-    __version__ = "1.1"
+    __version__ = "1.1.1"
     __author__ = ["Colt#0001", "Dinnerb0ne#2067", "Predä 。#1001"]
 
     def __init__(self, bot: Red):
@@ -54,7 +54,7 @@ class Speedtest(commands.Cog):
                 "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli"
             )
             return await msg.edit(embed=em)
-        result = json.loads(result)
+        result = json.loads(result[0])
         embed = discord.Embed(
             color=0x10A714,
             title="Your speedtest results are:",

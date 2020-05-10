@@ -65,8 +65,8 @@ class Speedtest(commands.Cog):
                     f"Server   : {result['server']['name']} - {result['server']['location']}\n"
                     f"ISP      : {result.get('isp', 'Unknown')}\n"
                     f"Latency  : {round(result['ping']['latency'], 2)}ms ({round(result['ping']['jitter'], 2)}ms jitter)\n"
-                    f"Download : {naturalsize(result['download']['bandwidth'] * 8)}ps\n"
-                    f"Upload   : {naturalsize(result['upload']['bandwidth'] * 8)}ps\n"
+                    f"Download : {naturalsize(result['download']['bandwidth'] * 8)}ps ({naturalsize(result['download']['bytes'])} used)\n"
+                    f"Upload   : {naturalsize(result['upload']['bandwidth'] * 8)}ps ({naturalsize(result['upload']['bytes'])} used)\n"
                     f"Packet loss: {float(result.get('packetLoss', 0))}%",
                     lang="py",
                 )

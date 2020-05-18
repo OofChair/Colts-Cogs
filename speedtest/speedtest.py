@@ -13,7 +13,7 @@ from humanize import naturalsize
 class Speedtest(commands.Cog):
     """Speedtest for your bot's server."""
 
-    __version__ = "1.1.3"
+    __version__ = "1.1.4"
     __author__ = ["Colt#0001", "Dinnerb0ne#2067", "Predä 。#1001"]
 
     def __init__(self, bot: Red):
@@ -35,6 +35,7 @@ class Speedtest(commands.Cog):
     @checks.is_owner()
     @commands.command()
     @commands.bot_has_permissions(embed_links=True)
+    @commands.cooldown(1, 60, commands.BucketType.user)
     async def speedtest(self, ctx: commands.Context, edit: bool = True):
         """
         Runs a speedtest and prints the result.

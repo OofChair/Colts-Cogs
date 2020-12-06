@@ -53,7 +53,7 @@ class Speedtest(commands.Cog):
             em.title = "Failed to get a speedtest result."
             em.description = (
                 "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli\n"
-                "Don't forget to uninstall old speedtest-cli package by using `sudo apt-get uninstall speedtest-cli` and `pip uninstall speedtest-cli`.\n"
+                "Don't forget to uninstall old speedtest-cli package by using `sudo apt-get remove speedtest-cli` and `pip uninstall speedtest-cli`.\n"
                 "After this done, you will have to run a first speedtest in console by using `speedtest --accept-license --accept-gdpr` command, to agreed their terms."
             )
             return await msg.edit(embed=em)

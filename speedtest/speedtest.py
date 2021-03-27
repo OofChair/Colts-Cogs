@@ -13,7 +13,7 @@ from humanize import naturalsize
 class Speedtest(commands.Cog):
     """Speedtest for your bot's server."""
 
-    __version__ = "1.1.4"
+    __version__ = "1.1.5"
     __author__ = ["Colt#0001", "Dinnerb0ne#2067", "Predä 。#1001"]
 
     def __init__(self, bot: Red):
@@ -25,10 +25,7 @@ class Speedtest(commands.Cog):
 
     def _speedtest(self):
         with subprocess.Popen(
-            ["speedtest --format json"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            shell=True,
+            ["speedtest --json"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
         ) as resp:
             return resp.communicate()
 
@@ -44,7 +41,8 @@ class Speedtest(commands.Cog):
         Use `[p]speedtest false` if you want the result in a new message.
         """
         em = discord.Embed(
-            color=await ctx.embed_colour(), title="Running speedtest ... This may take a while! ⏱",
+            color=await ctx.embed_colour(),
+            title="Running speedtest ... This may take a while! ⏱",
         )
         msg = await ctx.send(embed=em)
         results = await self.bot.loop.run_in_executor(None, self._speedtest)
@@ -54,7 +52,6 @@ class Speedtest(commands.Cog):
             em.description = (
                 "Please make sure to follow the installation instructions at: https://www.speedtest.net/apps/cli\n"
                 "Don't forget to uninstall old speedtest-cli package by using `sudo apt-get remove speedtest-cli` and `pip uninstall speedtest-cli`.\n"
-                "After this done, you will have to run a first speedtest in console by using `speedtest --accept-license --accept-gdpr` command, to agreed their terms."
             )
             return await msg.edit(embed=em)
         result = json.loads(results[0])

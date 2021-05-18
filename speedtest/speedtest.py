@@ -27,7 +27,6 @@ class Speedtest(commands.Cog):
 
     def _speedtest(self):
         with subprocess.Popen(
-
             [shutil.which('speedtest'), "--format", "json"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

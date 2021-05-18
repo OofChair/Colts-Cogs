@@ -1,3 +1,5 @@
+import shutil
+
 import discord
 from redbot.core.bot import Red
 from redbot.core import commands, checks
@@ -25,7 +27,8 @@ class Speedtest(commands.Cog):
 
     def _speedtest(self):
         with subprocess.Popen(
-            ["/usr/bin/speedtest --format json"],
+
+            [shutil.which('speedtest'), "--format", "json"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=True,

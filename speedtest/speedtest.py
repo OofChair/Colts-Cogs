@@ -1,3 +1,4 @@
+import platform
 import shutil
 
 import discord
@@ -27,7 +28,7 @@ class Speedtest(commands.Cog):
 
     def _speedtest(self):
         with subprocess.Popen(
-            [shutil.which('speedtest'), "--format", "json"],
+            [shutil.which('speedtest'), "--format", "json"] if platform.system() == "Windows" else [f"{shutil.which('speedtest')} --format json"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=True,
